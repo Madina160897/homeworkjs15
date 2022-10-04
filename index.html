@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+    <div class="login">
+
+        <b>Login</b>
+        <input class="mt-20 input users" oninput="getUserWithEmail(email)" type="email" placeholder="email">
+        <input class="mt-10 input" type="password" placeholder="password">
+        <div class="reg mt-10">
+            <div>
+                <input type="checkbox"> Remember me
+            </div>
+            <a href="./page2.html">registration</a>
+        </div>
+        <div>
+            <!-- <a href="./page3.html"> -->
+                <button class="but mt-10" onclick="isEmail(email)">login</button>
+            <!-- </a> -->
+        </div>
+
+    </div>
+
+</body>
+
+<script>
+    function getUserWithEmail(email) {
+        let users = JSON.parse(localStorage.getItem(".users"));
+        let findUser = users.filter((users) => users.email === email)
+        return findUser
+    }
+
+    function isEmail(email) {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
+
+</script>
+
+</html>
