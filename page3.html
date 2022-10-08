@@ -15,19 +15,51 @@
 
         <b>Home page</b> <br>
         <div class="mt-20">
-            <p class="pThreeName">Name</p> <br>
-            <p class="pThreeSurname">Surname</p> <br>
-            <p class="pThreeAge">Age</p> <br>
+            <p class="pThreeName">Name: </p> <br>
+            <p class="pThreeSurname">Surname: </p> <br>
+            <p class="pThreeAge">Age: </p> <br>
         </div>
 
         <div>
-            <button class="but mt-10">Logout</button> <br>
-            <button class="but mt-10" onclick="detAcc(e)"> delete my acc </button>
+            <button class="but mt-10" onclick="logout()">Logout</button> <br>
+            <button class="but mt-10" onclick="detAcc()"> delete my acc </button>
         </div>
 
     </div>
 
-    <script src="./script.js"></script>
+    <script>
+
+        if (!localStorage.getItem("currentUser")) {
+            window.location.href = './page1.html'
+        } else {
+            if (!JSON.parse(localStorage.getItem("currentUser")).isRemember) {
+                logOut()
+            }
+        }
+
+        getCurrentUser()
+        function getCurrentUser() {
+            let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            let pThreeName = document.querySelector(".pThreeName");
+            pThreeName.textContent += currentUser.name;
+            let pThreeSurname = document.querySelector(".pThreeSurname");
+            pThreeSurname.textContent += currentUser.surname;
+            let pThreeAge = document.querySelector(".pThreeAge");
+            pThreeAge.textContent += currentUser.age;
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            document.location.href = './page1.html';
+        }
+
+        function detAcc() {
+            let users = JSON.parse(localStorage.getItem("users"));
+            let currentUser = localStorage.getItem("currentUser");
+            localStorage.setItem('users', JSON.stringify(users.filter(user => user.email != currentUser.email)))
+            logout()
+        }
+    </script>
 
 </body>
 

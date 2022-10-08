@@ -18,7 +18,7 @@
         <input class="mt-10 input pOnePassword" type="password" placeholder="password">
         <div class="reg mt-10">
             <div>
-                <input class="remember" type="checkbox" onclick="fnRem()"> Remember me
+                <input class="remember" type="checkbox"> Remember me
             </div>
             <a href="./page2.html">registration</a>
         </div>
@@ -30,6 +30,66 @@
 
 </body>
 
-<script src="./script.js"></script>
+<script>
+
+if (localStorage.getItem("currentUser")) {
+            if (JSON.parse(localStorage.getItem("currentUser")).isRemember) {
+                window.location.href = './page3.html'
+            } else {
+                localStorage.removeItem("currentUser")
+            }
+        }
+
+function fnLogin() {
+    let currentUser = {
+        email: document.querySelector(".pOneEmail").value,
+        password: document.querySelector(".pOnePassword").value,
+    }
+
+    let users = JSON.parse(localStorage.getItem("users"));
+
+    let findUser = users.filter(user => user.email == currentUser.email)[0]
+
+    if (!findUser) {
+        alert("No user with that email")
+        return
+    }
+
+    if (findUser.password != currentUser.password) {
+        alert("Password is incorrect")
+        return
+    }
+
+    localStorage.setItem("currentUser", JSON.stringify({
+        ...findUser,
+        isRemember: document.querySelector(".remember").checked
+    }))
+    window.location.href = './page3.html'
+
+    function checkData(user) {
+        if (!validateEmail(user.email)) {
+            alert('Incorrect email!')
+            return false
+        } else if (user.password.length < 1) {
+            alert('Complete all data!')
+            return false
+        } else {
+            return true
+        }
+    }
+
+    if (!checkData(findUser)) return
+
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+}
+
+
+</script>
 
 </html>
