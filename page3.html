@@ -13,17 +13,52 @@
 
     <div class="login">
 
-        <b>Home page</b> <br>
-        <div class="mt-20">
-            <p class="pThreeName">Name: </p> <br>
-            <p class="pThreeSurname">Surname: </p> <br>
-            <p class="pThreeAge">Age: </p> <br>
+        <b style="display: flex; justify-content: center;">Home page</b> <br>
+        <div class="fon">
+            <div class="block1">
+                <p>Personal data</p>
+                <button class="but mt-10">Edit profile</button>
+            </div>
+            <div style="height: 90px; padding-left: 128px;" class="mt-20">
+                <b style="font-size: 20px;" class="pThreeName">Name: </b> <br>
+                <b style="font-size: 20px;" class="pThreeSurname">Surname: </b> <br>
+                <b style="font-size: 20px;" class="pThreeAge">Age: </b> <br>
+            </div>
+
+            <div class="buts">
+                <button class="but mt-10" onclick="logout()">Logout</button> <br>
+                <button class="but mt-10" onclick="detAcc()"> delete my acc </button>
+            </div>
         </div>
 
-        <div>
-            <button class="but mt-10" onclick="logout()">Logout</button> <br>
-            <button class="but mt-10" onclick="detAcc()"> delete my acc </button>
-        </div>
+        <br>
+
+        <b style="display: flex; justify-content: center;">Other user</b> <br>
+
+        <table>
+            <tr>
+                <th>email</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Age</th>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            
+        </table>
+
 
     </div>
 

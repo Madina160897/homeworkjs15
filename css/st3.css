@@ -1,7 +1,7 @@
 .login{
-    padding-left: 30%;
+    padding-left: 20%;
     padding-top: 10%;
-    width: 400px;
+    width: 690px;
     height: 400px;
 }
 
@@ -29,4 +29,38 @@ b{
     display: flex;
     flex-direction: column;
     justify-content: left;
+}
+
+.fon{
+    width: 700px;
+    height: 210px;
+    border: 5px solid black;
+}
+
+.block1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.buts{
+    padding-left: 290px;
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+table{
+    width: 700px;
+    height: 200px;
+}
+
+th{
+    height: 50px;
+    border: 5px solid black;
+}
+
+td{
+    border: 5px solid black; 
 }
