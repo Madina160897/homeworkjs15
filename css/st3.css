@@ -53,14 +53,12 @@ b{
 
 table{
     width: 700px;
-    height: 200px;
-}
-
-th{
-    height: 50px;
+    height: 150px;
     border: 5px solid black;
+    border-collapse: collapse;
 }
 
-td{
-    border: 5px solid black; 
+td, th{
+    border: 5px solid black;
+    text-align: center
 }

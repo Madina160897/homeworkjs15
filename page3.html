@@ -35,28 +35,20 @@
 
         <b style="display: flex; justify-content: center;">Other user</b> <br>
 
-        <table>
+        <div style="display: flex; flex-direction: row; justify-content: center">
+            <input class="pThreename" type="text" placeholder="enter a username">
+            <button class="find" onclick="findUser()">find</button>
+        </div> <br>
+
+        <table class="users-list">
             <tr>
+                <th>ID</th>
                 <th>email</th>
                 <th>Name</th>
                 <th>Surname</th>
                 <th>Age</th>
             </tr>
 
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            
         </table>
 
 
@@ -73,6 +65,9 @@
         }
 
         getCurrentUser()
+        getOtherUsers()
+
+
         function getCurrentUser() {
             let currentUser = JSON.parse(localStorage.getItem("currentUser"));
             let pThreeName = document.querySelector(".pThreeName");
@@ -94,6 +89,62 @@
             localStorage.setItem('users', JSON.stringify(users.filter(user => user.email != currentUser.email)))
             logout()
         }
+
+        function getOtherUsers() {
+            let users = JSON.parse(localStorage.getItem("users"), function (key, value) {
+                if (key == "password") return undefined;
+                return value;
+            })
+            let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            let otherUsers = users.filter(user => user.email != currentUser.email);
+
+            let listElement = document.querySelector(".users-list")
+            otherUsers.forEach((element, index) => {
+                listElement.innerHTML += `
+                <tr>
+                    <td> ${index + 1} </td>
+                    <td> ${element.email} </td>
+                    <td> ${element.name} </td>
+                    <td> ${element.surname} </td>
+                    <td> ${element.age}  </td>
+                </tr>`
+            });
+        }
+
+        function findUser() {
+
+            let nameUser = {
+                name: document.querySelector(".pThreename").value,
+                surname: document.querySelector(".pThreename").value,
+            }
+            let users = JSON.parse(localStorage.getItem("users"), function (key, value) {
+                if (key == "password") return undefined;
+                return value;
+            })
+
+            let findUsers = users.filter(user => user.name == nameUser.name || user.surname == nameUser.surname);
+            console.log(findUsers)
+
+            let listElement = document.querySelector(".users-list")
+            findUsers.forEach((element, index) => {
+                listElement.innerHTML = `
+                <tr>
+                    <th>ID</th>
+                    <th>email</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Age</th>
+                </tr>
+                <tr>
+                    <td> ${index + 1} </td>
+                    <td> ${element.email} </td>
+                    <td> ${element.name} </td>
+                    <td> ${element.surname} </td>
+                    <td> ${element.age}  </td>
+                </tr>`
+            });
+        }
+
     </script>
 
 </body>
