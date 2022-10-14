@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .foot {
+            width: 100%;
+            height: 100vh;
+            background-image: url(https://st.depositphotos.com/2039187/2006/i/450/depositphotos_20060343-stock-photo-soccer-field-or-football-field.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            padding-left: 5%;
+            padding-right: 5%;
+            box-sizing: border-box;
+        }
+
+        .filed{
+            width: 100%;
+            height: 99vh;
+            border: 1px solid transparent;
+            position: relative;
+        }
+
+        .ball {
+            width: 100px;
+            height: 100px;
+            background-image: url(https://w7.pngwing.com/pngs/43/132/png-transparent-football-pitch-sport-soccer-ball-sporting-goods-sports-equipment-football-player.png);
+            border-radius: 100px;
+            background-position: center;
+            background-size: cover;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: 1s all;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="foot">
+        <div class="filed">
+            <div class="ball"></div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+
+    let foot = document.querySelector(".foot");
+    let ball = document.querySelector(".ball");
+    let filed = document.querySelector(".filed")
+
+    filed.onclick = function (params) {
+
+        let footBall = this.getBoundingClientRect();
+        
+        let myBall = {
+            top: params.clientY - footBall.top - filed.clientTop - ball.clientHeight / 2,
+            left: params.clientX - footBall.left - filed.clientLeft - ball.clientWidth / 2
+        };
+        if (myBall.top < 0) myBall.top = 0;
+        if (myBall.left < 0) myBall.left = 0;
+        if (myBall.left + ball.clientWidth > filed.clientWidth) {
+            myBall.left = filed.clientWidth - ball.clientWidth;
+        }
+        if (myBall.top + ball.clientHeight > filed.clientHeight) {
+            myBall.top = filed.clientHeight - ball.clientHeight;
+        }
+
+        ball.style.left = myBall.left + 'px';
+        ball.style.top = myBall.top + 'px';
+    }
+</script>
+
+</html>

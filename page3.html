@@ -11,6 +11,17 @@
 
 <body>
 
+    <header>
+        <div>
+            <button class="but">Text color</button>
+            <button class="but">Page color</button>
+        </div>
+        <div class="colors">
+            <!-- <input class="color" type="checkbox"> red -->
+        </div>
+    </header>
+
+
     <div class="login">
 
         <b style="display: flex; justify-content: center;">Home page</b> <br>
@@ -143,6 +154,33 @@
                     <td> ${element.age}  </td>
                 </tr>`
             });
+        }
+
+        let colors = [];
+        getColors()
+        function getColors() {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    JSON.parse(xhr.response).data.forEach(element => {
+                        colors.push(element);
+                    });
+                    makeColorBlocks()
+                }
+            };
+
+            xhr.open("GET", "https://reqres.in/api/unknown");
+            xhr.send();
+        }
+
+        function makeColorBlocks(){
+            let elColors = document.querySelector(".colors");
+            colors.forEach(element => {
+                elColors.innerHTML += `
+                <input class="color" type="checkbox" style='background-color: ${element.color}'
+                onclick = 'changeColor()'><span>${element.name}</span> 
+                `
+            })
         }
 
     </script>

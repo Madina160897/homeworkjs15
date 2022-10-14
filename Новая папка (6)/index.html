@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .color{
+        width: 50px;
+        height: 50px;
+    }
+    .colors{
+        display: flex
+    }
+    .color-space{
+        width: 500px;
+        height: 500px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="colors">
+        
+    </div>
+    <div class="color-space">
+        
+        </div>
+
+    <script>
+
+        //     xhr.onreadystatechange = function() {
+        //     	if (xhr.status == 200 && xhr.readyState != 4) {
+        //       	     div.innerHTML += xhr.response + '<br>';
+        //     	     }           
+        //  }
+        let colors = [];
+        getColors()
+        function getColors() {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    JSON.parse(xhr.response).data.forEach(element => {
+                        colors.push(element);
+                    });
+                    makeColorBlocks()
+                }
+            };
+
+            xhr.open("GET", "https://reqres.in/api/unknown");
+            xhr.send();
+        }
+
+        function makeColorBlocks(){
+            let elColors = document.querySelector(".colors");
+            colors.forEach(element => {
+                elColors.innerHTML += `
+                <div class='color' style='background-color: ${element.color}'
+                onclick = 'changeColor()'></div>
+                `
+            })
+        }
+
+        function changeColor() {
+            let elColorSpace = document.querySelector(".color-space");
+            elColorSpace.style.backgroundColor = event.path[0].style.backgroundColor;
+        }
+
+
+    </script>
+
+</body>
+
+</html>
