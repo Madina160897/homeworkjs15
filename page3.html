@@ -17,7 +17,6 @@
             <button class="but">Page color</button>
         </div>
         <div class="colors">
-            <!-- <input class="color" type="checkbox"> red -->
         </div>
     </header>
 
@@ -26,10 +25,25 @@
 
         <b style="display: flex; justify-content: center;">Home page</b> <br>
         <div class="fon">
+
             <div class="block1">
-                <p>Personal data</p>
-                <button class="but mt-10">Edit profile</button>
+                <span style="margin-right: 240px;">Personal data</span>
+                <button class="but2 mt-10" onclick="editPro()">Edit profile</button>
             </div>
+
+            <div class="fon-block">
+                <div class="block">
+                    <span>Name:</span><br>
+                    <input class="newName" type="text"><br>
+                    <span>Surname:</span><br>
+                    <input class="newSurname" type="text"><br>
+                    <span>Age:</span><br>
+                    <input class="newAge" type="text"><br>
+                    <button onclick="save1()">Save</button><br>
+                    <button onclick="close1()">Close</button>
+                </div>
+            </div>
+
             <div style="height: 90px; padding-left: 128px;" class="mt-20">
                 <b style="font-size: 20px;" class="pThreeName">Name: </b> <br>
                 <b style="font-size: 20px;" class="pThreeSurname">Surname: </b> <br>
@@ -47,7 +61,7 @@
         <b style="display: flex; justify-content: center;">Other user</b> <br>
 
         <div style="display: flex; flex-direction: row; justify-content: center">
-            <input class="pThreename" type="text" placeholder="enter a username">
+            <input class="find-name" type="text" placeholder="enter a username">
             <button class="find" onclick="findUser()">find</button>
         </div> <br>
 
@@ -122,11 +136,53 @@
             });
         }
 
+        let div1 = document.querySelector('.fon-block');
+        let div2 = document.querySelector('.block');
+        let body = document.querySelector('body');
+
+        function editPro() {
+            div1.style.display = 'block';
+            div2.style.display = 'block';
+            div1.style.backgroundColor = "rgb(196, 193, 193, 0.5)";
+        }
+
+        function close1() {
+            div1.style.display = 'none';
+            body.style.backgroundColor = 'white';
+        }
+
+        function save1() {
+            let pThreeName = document.querySelector(".pThreeName");
+            let pThreeSurname = document.querySelector(".pThreeSurname");
+            let pThreeAge = document.querySelector(".pThreeAge");
+            let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            let users = JSON.parse(localStorage.getItem("users"));
+            let newName = document.querySelector(".newName").value;
+            let newSurname = document.querySelector(".newSurname").value;
+            let newAge = document.querySelector(".newAge").value;
+
+            currentUser.name = (pThreeName.textContent = newName);
+            currentUser.surname = (pThreeSurname.textContent = newSurname);
+            currentUser.age = (pThreeAge.textContent = newAge);
+
+            for (let i = 0; i < users.length; i++) {
+                if (currentUser.email == users[i].email) {
+                    users[i].name = currentUser.name
+                    users[i].surname = currentUser.surname
+                    users[i].age = currentUser.age
+                }
+            }
+
+            localStorage.setItem("currentUser", JSON.stringify(currentUser))
+            localStorage.setItem("users", JSON.stringify(users))
+            div1.style.display = "none";
+        }
+
         function findUser() {
 
             let nameUser = {
                 name: document.querySelector(".pThreename").value,
-                surname: document.querySelector(".pThreename").value,
+                surname: document.querySelector(".pThreeSurname").value,
             }
             let users = JSON.parse(localStorage.getItem("users"), function (key, value) {
                 if (key == "password") return undefined;
@@ -136,8 +192,19 @@
             let findUsers = users.filter(user => user.name == nameUser.name || user.surname == nameUser.surname);
             console.log(findUsers)
 
+            let findName = document.querySelector(".find-name").value
+
+            let result = []
+            users.forEach((user) => {
+                if (!(user.name.search(findName) == -1 && user.surname.search(findName) == -1)) {
+                    result.push(user)
+                }
+            })
+
+            return result
+
             let listElement = document.querySelector(".users-list")
-            findUsers.forEach((element, index) => {
+            result.forEach((element, index) => {
                 listElement.innerHTML = `
                 <tr>
                     <th>ID</th>
@@ -173,7 +240,7 @@
             xhr.send();
         }
 
-        function makeColorBlocks(){
+        function makeColorBlocks() {
             let elColors = document.querySelector(".colors");
             colors.forEach(element => {
                 elColors.innerHTML += `
