@@ -65,7 +65,7 @@
             <button class="find" onclick="findUser()">find</button>
         </div> <br>
 
-        <table class="users-list">
+        <table class="users-list" id="table">
             <tr>
                 <th>ID</th>
                 <th>email</th>
@@ -179,40 +179,34 @@
         }
 
         function findUser() {
-
-            let nameUser = {
-                name: document.querySelector(".pThreename").value,
-                surname: document.querySelector(".pThreeSurname").value,
+            let table = document.getElementById("table")
+            while(table.rows.length > 1){
+                table.deleteRow(1)
             }
-            let users = JSON.parse(localStorage.getItem("users"), function (key, value) {
-                if (key == "password") return undefined;
-                return value;
-            })
-
-            let findUsers = users.filter(user => user.name == nameUser.name || user.surname == nameUser.surname);
-            console.log(findUsers)
 
             let findName = document.querySelector(".find-name").value
+            console.log(findName)
+            let users = JSON.parse(localStorage.getItem("users"));
+            let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+            let findUsers = users.filter(user => user.email != currentUser.email);
+            console.log(findUsers)
+
+            
 
             let result = []
-            users.forEach((user) => {
+            findUsers.forEach((user) => {
                 if (!(user.name.search(findName) == -1 && user.surname.search(findName) == -1)) {
                     result.push(user)
                 }
             })
 
-            return result
+            
 
             let listElement = document.querySelector(".users-list")
             result.forEach((element, index) => {
-                listElement.innerHTML = `
-                <tr>
-                    <th>ID</th>
-                    <th>email</th>
-                    <th>Name</th>
-                    <th>Surname</th>
-                    <th>Age</th>
-                </tr>
+                listElement.innerHTML += `
+                
                 <tr>
                     <td> ${index + 1} </td>
                     <td> ${element.email} </td>
