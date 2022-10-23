@@ -71,7 +71,6 @@ header {
     margin: 0 auto;
     height: 50px;
     padding-left: 50px;
-    padding-top: 10px;
     background-color: rgb(0, 255, 157);
     box-sizing: border-box;
 }
@@ -110,4 +109,53 @@ body {
     text-align: center;
     cursor: pointer;
     z-index: -1;
+}
+
+.text-color {
+    width: 100%;
+    height: 100vh;
+    display: none;
+    position: fixed;
+    background-color: rgb(219, 246, 253, 0.5);
+    margin-top: -217px;
+    margin-left: -294px;
+}
+
+.colors-text {
+    width: 300px;
+    height: 200px;
+    display: none;
+    margin: auto;
+    border: 1px solid black;
+    padding: 30px;
+    box-sizing: border-box;
+    background-color: white;
+    margin: 160px 475px;
+}
+
+.body-color {
+    width: 100%;
+    height: 100vh;
+    display: none;
+    position: fixed;
+    background-color: rgb(219, 246, 253, 0.5);
+    margin-top: -217px;
+    margin-left: -294px;
+}
+
+.colors-body {
+    width: 300px;
+    height: 200px;
+    display: none;
+    margin: auto;
+    border: 1px solid black;
+    padding: 30px;
+    box-sizing: border-box;
+    background-color: white;
+    margin: 160px 475px;
+}
+
+.colors{
+    display: flex;
+    flex-direction: row;
 }

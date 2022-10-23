@@ -13,11 +13,22 @@
 
     <header>
         <div>
-            <button class="but">Text color</button>
-            <button class="but">Page color</button>
+            <button class="but2" onclick="textColor()">Text color</button>
+            <button class="but2" onclick="bodyColor()">Page color</button>
         </div>
-        <div class="colors">
+        <div class="text-color">
+            <div class="colors-text">
+                <button onclick="saveColor()">Save</button>
+                <button onclick="close2()">Close</button>
+            </div>
         </div>
+        <div class="body-color">
+            <div class="colors-body">
+                <button onclick="saveColor()">Save</button>
+                <button onclick="close2()">Close</button>
+            </div>
+        </div>
+
     </header>
 
 
@@ -180,7 +191,7 @@
 
         function findUser() {
             let table = document.getElementById("table")
-            while(table.rows.length > 1){
+            while (table.rows.length > 1) {
                 table.deleteRow(1)
             }
 
@@ -192,7 +203,7 @@
             let findUsers = users.filter(user => user.email != currentUser.email);
             console.log(findUsers)
 
-            
+
 
             let result = []
             findUsers.forEach((user) => {
@@ -201,7 +212,7 @@
                 }
             })
 
-            
+
 
             let listElement = document.querySelector(".users-list")
             result.forEach((element, index) => {
@@ -217,16 +228,29 @@
             });
         }
 
-        let colors = [];
-        getColors()
-        function getColors() {
+        let colorsText = [];
+        let colorsBody = [];
+
+        let tc = document.querySelector('.text-color');
+        let ct = document.querySelector('.colors-text');
+        let bc = document.querySelector('.body-color');
+        let cb = document.querySelector('.colors-body');
+
+        function textColor() {
+            tc.style.display = 'block';
+            ct.style.display = 'block';
+            tc.style.backgroundColor = "rgb(196, 193, 193, 0.5)";
+            getColors1()
+        }
+
+        function getColors1() {
             let xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     JSON.parse(xhr.response).data.forEach(element => {
-                        colors.push(element);
+                        colorsText.push(element);
                     });
-                    makeColorBlocks()
+                    makeColorBlocks1()
                 }
             };
 
@@ -234,14 +258,77 @@
             xhr.send();
         }
 
-        function makeColorBlocks() {
-            let elColors = document.querySelector(".colors");
-            colors.forEach(element => {
+        function makeColorBlocks1() {
+            let elColors = document.querySelector(".colors-text");
+            colorsText.forEach(element => {
                 elColors.innerHTML += `
-                <input class="color" type="checkbox" style='background-color: ${element.color}'
-                onclick = 'changeColor()'><span>${element.name}</span> 
+                <div class="colors"> <input class="color" type="checkbox" style='color: ${element.color}'
+                onclick = 'changeColor1()'><span>${element.name}</span> </div>
                 `
             })
+        }
+
+        function changeColor1() {
+            let elColorSpace = document.querySelector("body");
+            elColorSpace.style.color = event.path[0].style.color;
+            localStorage.setItem("color1", JSON.stringify(event.path[0].style.color))
+        }
+
+        function bodyColor() {
+            bc.style.display = 'block';
+            cb.style.display = 'block';
+            bc.style.backgroundColor = "rgb(196, 193, 193, 0.5)";
+            getColors2()
+        }
+
+        function getColors2() {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    JSON.parse(xhr.response).data.forEach(element => {
+                        colorsBody.push(element);
+                    });
+                    makeColorBlocks2()
+                }
+            };
+
+            xhr.open("GET", "https://reqres.in/api/unknown");
+            xhr.send();
+        }
+
+        function makeColorBlocks2() {
+            let elColors = document.querySelector(".colors-body");
+            colorsBody.forEach(element => {
+                elColors.innerHTML += `
+                <div class="colors"> <input class="color" type="checkbox" style='background-color: ${element.color}'
+                onclick = 'changeColor2()'><span>${element.name}</span> </div>
+                `
+            })
+        }
+
+        function changeColor2() {
+            let elColorSpace = document.querySelector("body");
+            elColorSpace.style.backgroundColor = event.path[0].style.backgroundColor;
+            localStorage.setItem("color2", JSON.stringify(event.path[0].style.backgroundColor))
+        }
+
+        let bodyColor1 = document.querySelector("body")
+        let colorText = JSON.parse(localStorage.getItem("color1"))
+        let colorBody = JSON.parse(localStorage.getItem("color2"))
+
+        bodyColor1.style.backgroundColor = colorBody;
+        bodyColor1.style.color = colorText;
+
+        function close2() {
+            tc.style.display = 'none';
+            bc.style.display = 'none';
+            body.style.backgroundColor = 'white';
+        }
+
+        function saveColor() {
+            tc.style.display = "none";
+            bc.style.display = "none";
+            body.style.backgroundColor = 'white';
         }
 
     </script>
